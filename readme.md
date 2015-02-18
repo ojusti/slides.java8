@@ -4,8 +4,7 @@ class: center, middle, title
 [jop@infologic.fr](mailto:jop@infologic.fr)<br>2015
 ---
 layout: true
-.left-column[
-##Java 7
+.left-column[## Java 7
 1. [Underscores in Numeric Literals](#7_)
 1. [Strings in switch](#7switch)
 1. [Diamond operator](#7diamond)
@@ -14,7 +13,7 @@ layout: true
 .grey[##[Java 8](#8lambda)]]
 ---
 name: 7_
-# [Underscores in Numeric Literals](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
+#[Underscores in Numeric Literals](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
 
 ---
 name: 7switch
