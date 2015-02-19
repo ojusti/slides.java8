@@ -40,7 +40,7 @@ a {
   }
 .remark-code, .remark-inline-code {
   font-family: 'Ubuntu Mono';
-  float: left
+  margin-left: 25%;
 }
 .remark-code-line-highlighted {
   background-color: #ff7;

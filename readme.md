@@ -20,7 +20,31 @@ layout: true
 ---
 name: 7_
 # [Underscores in Numeric Literals](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
+```
+public void java6()
+{
+  long longNumber = 9876543210L;
 
+  long _5 = 5;
+
+  double pi = 3.1415926;
+}
+```
+## Improve readability
+```
+public void java7()
+{
+  long longNumber = 9_876_543_210L;
+  long longNumberOddFormat = 987__65______43__210L;
+
+  long _5 = 5;
+  long invalidUnderscoreAtTheEnd = 98_;
+
+  double pi = 3.14_15_92_6;
+  double invalidPi = 3_.1415926;
+  double anotherInvalidPi = 3._1415926;
+}
+```
 ---
 name: 7switch
 # [Strings in switch Statements](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
