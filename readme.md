@@ -2,6 +2,7 @@ class: center, middle, title
 # New Features in<br>Java 7 & Java 8
 
 [jop@infologic.fr](mailto:jop@infologic.fr)<br>2015
+
 ---
 layout: true
 .left-column[
@@ -11,9 +12,11 @@ layout: true
 1. [Diamond operator](#7diamond)
 1. [try-with-resources](#7try)
 1. [Catching Multiple Exception Types](#7catch)
+
 .grey[
 ## [Java 8](#8lambda)
 ]]
+
 ---
 name: 7_
 # [Underscores in Numeric Literals](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
