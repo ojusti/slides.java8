@@ -19,7 +19,7 @@ layout: true
 
 ---
 name: 7_
-# [Underscores in Numeric Literals...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
+# [Underscores in Numeric Literals ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
 ```
 void java6()
 {
@@ -47,7 +47,7 @@ void java7()
 ```
 ---
 name: 7switch
-# [Strings in switch Statements...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
+# [Strings in switch Statements ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
 ```
 int dayInWeek_java6(String dayOfWeek) {
   if(dayOfWeek.equalsIgnoreCase("Lundi")) return 1;
@@ -77,8 +77,22 @@ int dayInWeek_java7(String dayOfWeek) {
 ```
 ---
 name: 7diamond
-# [Type Inference for Generic Instance Creation](http://docs.oracle.com/javase/7/docs/technotes/guides/language/type-inference-generic-instance-creation.html)
-
+# [<> (diamond operator) ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/type-inference-generic-instance-creation.html)
+```
+private Map<IK, Map<IK, List<Mouvement>>> regroupMvtByPalAndFract(List<Mouvement> movs)
+{
+// MAP <IK palSV, <IK Fract, List<Mouvement>>>
+  Map<IK, Map<IK, List<Mouvement>>> mapPalFractMvt = new HashMap<IK, Map<IK,List<Mouvement>>>();
+  ...
+```
+### ... eliminates useless repetition in generic instance creation
+```
+private Map<IK, Map<IK, List<Mouvement>>> regroupMvtByPalAndFract(List<Mouvement> movs)
+{
+// MAP <IK palSV, <IK Fract, List<Mouvement>>>
+  Map<IK, Map<IK, List<Mouvement>>> mapPalFractMvt = new HashMap<>();
+  ...
+```
 ---
 name: 7try
 # [The try-with-resources Statement](http://docs.oracle.com/javase/7/docs/technotes/guides/language/try-with-resources.html)
