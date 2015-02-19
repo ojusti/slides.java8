@@ -1,1 +1,5 @@
 /mongoose*
+
+.~*
+
+bin/
