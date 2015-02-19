@@ -128,10 +128,32 @@ public static int executeCount(Connection conn, String sqlQuery) throws SQLExcep
   }
 }
 ```
+???
+See execution order in `_7_Try.java`
 ---
 name: 7catch
-# [Catching Multiple Exception Types](http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html)
-
+# [Catching Multiple Exception Types ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html)
+```
+public ISuiviVersion newInstance(Class<? extends ISuiviVersion versionClass) {
+  try {
+    return versionClass.newInstance();
+  } catch (InstantiationException e) {
+    throw new InfologicRuntimeException(/* TODO ERR */ null, e);
+  } catch (IllegalAccessException e) {
+    throw new InfologicRuntimeException(/* TODO ERR */ null, e);
+  }
+}
+```
+### ... reduces duplication and lessen the temptation to catch an overly broad exception
+```
+public ISuiviVersion newInstance(Class<? extends ISuiviVersion versionClass) {
+  try {
+    return versionClass.newInstance();
+  } catch (InstantiationException | IllegalAccessException e) {
+    throw new InfologicRuntimeException(/* TODO ERR */ null, e);
+  }
+}
+```
 ---
 layout: true
 .left-column[
