@@ -19,9 +19,9 @@ layout: true
 
 ---
 name: 7_
-# [Underscores in Numeric Literals](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
+# [Underscores in Numeric Literals...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
 ```
-public void java6()
+void java6()
 {
   long longNumber = 9876543210L;
 
@@ -30,9 +30,9 @@ public void java6()
   double pi = 3.1415926;
 }
 ```
-## Improve readability
+### ... improve readability
 ```
-public void java7()
+void java7()
 {
   long longNumber = 9_876_543_210L;
   long longNumberOddFormat = 987__65______43__210L;
@@ -47,8 +47,34 @@ public void java7()
 ```
 ---
 name: 7switch
-# [Strings in switch Statements](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
-
+# [Strings in switch Statements...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
+```
+int dayInWeek_java6(String dayOfWeek) {
+  if(dayOfWeek.equalsIgnoreCase("Lundi")) return 1;
+  if(dayOfWeek.equalsIgnoreCase("Mardi")) return 2;
+  if(dayOfWeek.equalsIgnoreCase("Mercredi")) return 3;
+  if(dayOfWeek.equalsIgnoreCase("Jeudi")) return 4;
+  if(dayOfWeek.equalsIgnoreCase("Vendredi")) return 5;
+  if(dayOfWeek.equalsIgnoreCase("Samedi")) return 6;
+  if(dayOfWeek.equalsIgnoreCase("Dimanche")) return 7;
+  throw new IllegalArgumentException("Jour inconnu : " + dayOfWeek);
+}
+```
+### ... generate more efficient bytecode, but are case sensitive
+```
+int dayInWeek_java7(String dayOfWeek) {
+* switch(dayOfWeek.toLowerCase()) {
+    case "lundi": return 1;
+    case "mardi": return 2;
+    case "mercredi": return 3;
+    case "jeudi": return 4;
+    case "vendredi": return 5;
+    case "samedi": return 6;
+    case "dimanche": return 7;
+    default: throw new IllegalArgumentException("Jour inconnu : " + dayOfWeek);
+  }
+}
+```
 ---
 name: 7diamond
 # [Type Inference for Generic Instance Creation](http://docs.oracle.com/javase/7/docs/technotes/guides/language/type-inference-generic-instance-creation.html)
