@@ -9,6 +9,10 @@ h1, h2, h3, li {
 h1 {
   color: #f92672;
 }
+h3 {
+    display:inline;
+    color: #f92672;
+}
 a {
   color: inherit;
   text-decoration: none;
