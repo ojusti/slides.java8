@@ -21,7 +21,7 @@ layout: true
 name: 7_
 # [Underscores in Numeric Literals ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html)
 ```
-void java6()
+public void java6()
 {
   long longNumber = 9876543210L;
 
@@ -32,7 +32,7 @@ void java6()
 ```
 ### ... improve readability
 ```
-void java7()
+public void java7()
 {
   long longNumber = 9_876_543_210L;
   long longNumberOddFormat = 987__65______43__210L;
@@ -49,7 +49,7 @@ void java7()
 name: 7switch
 # [Strings in switch Statements ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/strings-switch.html)
 ```
-int dayInWeek_java6(String dayOfWeek) {
+public int dayInWeek_java6(String dayOfWeek) {
   if(dayOfWeek.equalsIgnoreCase("Lundi")) return 1;
   if(dayOfWeek.equalsIgnoreCase("Mardi")) return 2;
   if(dayOfWeek.equalsIgnoreCase("Mercredi")) return 3;
@@ -62,7 +62,7 @@ int dayInWeek_java6(String dayOfWeek) {
 ```
 ### ... generate more efficient bytecode, but are case sensitive
 ```
-int dayInWeek_java7(String dayOfWeek) {
+public int dayInWeek_java7(String dayOfWeek) {
 * switch(dayOfWeek.toLowerCase()) {
     case "lundi": return 1;
     case "mardi": return 2;
@@ -79,24 +79,55 @@ int dayInWeek_java7(String dayOfWeek) {
 name: 7diamond
 # [<> (diamond operator) ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/type-inference-generic-instance-creation.html)
 ```
-private Map<IK, Map<IK, List<Mouvement>>> regroupMvtByPalAndFract(List<Mouvement> movs)
-{
+private Map<IK, Map<IK, List<Mouvement>>> regroupMvtByPalAndFract(List<Mouvement> movs) {
 // MAP <IK palSV, <IK Fract, List<Mouvement>>>
   Map<IK, Map<IK, List<Mouvement>>> mapPalFractMvt = new HashMap<IK, Map<IK,List<Mouvement>>>();
-  ...
 ```
 ### ... eliminates useless repetition in generic instance creation
 ```
-private Map<IK, Map<IK, List<Mouvement>>> regroupMvtByPalAndFract(List<Mouvement> movs)
-{
-// MAP <IK palSV, <IK Fract, List<Mouvement>>>
   Map<IK, Map<IK, List<Mouvement>>> mapPalFractMvt = new HashMap<>();
-  ...
+```
+### ... but think about primitive obsession
+```
+private Palettes regroupMvtByPalAndFract(List<Mouvement> movs) {...}
+public class Palettes {
+  private Map<IK, Fractions> fractions = new HashMap<>();
+  public Fractions getFractionsPalette(IK palette) {...}
+}
+public class Fractions {
+  private Map<IK, Mouvements> mouvements = new HashMap<>();
+  public Mouvements getMouvementsFraction(IK fraction) {...}
+}
+public class Mouvements {
+  private List<Mouvement> mouvements = new ArrayList<>();
+}
 ```
 ---
 name: 7try
-# [The try-with-resources Statement](http://docs.oracle.com/javase/7/docs/technotes/guides/language/try-with-resources.html)
-
+# [The try-with-resources Statement ...](http://docs.oracle.com/javase/7/docs/technotes/guides/language/try-with-resources.html)
+```
+public static int executeCount(Connection conn, String sqlQuery) throws SQLException {
+  Statement st = conn.createStatement();
+  try {
+    ResultSet resultSet = st.executeQuery(sqlQuery);
+    resultSet.next();
+    return resultSet.getInt(1);
+  } finally {
+*   st.close();
+  }
+}
+```
+### ... ensures that each resource java.lang.AutoCloseable is closed at the end
+```
+public static int executeCount(Connection conn, String sqlQuery) throws SQLException {
+* try(Statement st = conn.createStatement())
+  {
+    ResultSet resultSet = st.executeQuery(sqlQuery);
+    resultSet.next();
+    return resultSet.getInt(1);
+  }
+}
+```
 ---
 name: 7catch
 # [Catching Multiple Exception Types](http://docs.oracle.com/javase/7/docs/technotes/guides/language/catch-multiple.html)
