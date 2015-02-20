@@ -172,7 +172,6 @@ layout: true
 
 ---
 name: 8lambda
-# [Lambda Expressions](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
 ### Java is an object-oriented programming language
 ```
 public void sortByLengthInJava7(String[] strings) {
@@ -184,17 +183,17 @@ public void sortByLengthInJava7(String[] strings) {
   });
 }
 ```
-### λ are functional programming constructs
-#### - blocks of code with parameters, aka methods
-#### - that may be executed at a later point in time
+# [Lambda Expressions ...](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
 ```
 public void sortByLengthInJava8(String[] strings) {
 * Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
 }
 ```
-### λ are code treated as data
+### ... are functional programming constructs
+#### (blocks of code with parameters, aka methods, that may be executed at a later point in time)
+### ... are code treated as data
 ---
-# [λ](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
+# [λ ...](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
 ```
 public void sortByLengthInJava8(String[] strings) {
   Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
@@ -207,7 +206,7 @@ public class Arrays {
   ...
 }
 ```
-### λ can be converted to functional interfaces
+### ... can be converted to functional interfaces
 ```
 *@FunctionalInterface
 public interface Comparator<T> {
@@ -215,7 +214,7 @@ public interface Comparator<T> {
   ...
 }
 ```
-### a functional interface has exactly one abstract method
+### ... which have exactly one abstract method
 
 ???
 - λ expressions can access effectively final variables from the enclosing scope.
