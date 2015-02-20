@@ -192,6 +192,7 @@ public void sortByLengthInJava8(String[] strings) {
 * Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
 }
 ```
+### λ are code treated as data
 ---
 # [λ](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
 ```
