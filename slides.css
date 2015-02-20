@@ -30,7 +30,7 @@ a {
 .left-column {
   color: #000;
   width: 20%;
-  height: 80%;
+  height: 100%;
   float: left;
 }
   .left-column li, h2{
