@@ -162,24 +162,102 @@ layout: true
 ]
 ## Java 8
 1. [Lambda Expressions](#8lambda)
-1. [Method References](#8refs)
 1. [Default Methods](#8default)
+1. [Method References](#8refs)
 1. [Streams](#8streams)
 1. [Date-Time Package](#8date)
 1. Removal of PermGen
+1. Nashorn (js engine)
 ]
 
 ---
 name: 8lambda
 # [Lambda Expressions](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
-
+### Java is an object-oriented programming language
+```
+public void sortByLengthInJava7(String[] strings) {
+  Arrays.sort(strings, new Comparator<String> {
+    @Override
+    public int compare(String first, String second) {
+*     Integer.compare(first.length(), second.length());
+    }
+  });
+}
+```
+### λ are functional programming constructs
+#### - blocks of code with parameters
+#### - that may be executed at a later point in time
+```
+public void sortByLengthInJava8(String[] strings) {
+* Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
+}
+```
 ---
-name: 8refs
-# [Method References](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html)
+# [λ](http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html)
+```
+public void sortByLengthInJava8(String[] strings) {
+  Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
+}
+
+public class Arrays {
+  public static <T> void sort(T[] a, Comparator<? super T> c) { }
+}
+```
+### λ can be converted to functional interfaces
+```
+*@FunctionalInterface
+public interface Comparator<T> {
+  int compare(T o1, T o2);
+  ...
+}
+```
+### a functional interface has exactly one abstract method
+
+???
+- λ expressions can access effectively final variables from the enclosing scope.
+- Method and constructor references refer to methods or constructors without invoking them.
+- You can now add default and static methods to interfaces that provide concrete implementations.
+- You must resolve any conflicts between default methods from multiple interfaces.
 
 ---
 name: 8default
-# [Default Methods](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
+# [Default Methods in Interfaces](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
+```
+@FunctionalInterface
+public interface Comparator<T> {
+  public int compare(T o1, T o2);
+  public boolean equals(Object obj);
+* public default Comparator<T> reversed() {
+      return Collections.reverseOrder(this);
+  }
+* public default Comparator<T> thenComparing(Comparator<? super T> other) {
+      Objects.requireNonNull(other);
+      return (Comparator<T> & Serializable) (c1, c2) -> {
+          int res = compare(c1, c2);
+          return (res != 0) ? res : other.compare(c1, c2);
+      };
+  }
+  ...
+
+* public static <T extends Comparable<? super T>> Comparator<T> reverseOrder() {
+      return Collections.reverseOrder();
+  }
+* public static <T extends Comparable<? super T>> Comparator<T> naturalOrder() {
+      return (Comparator<T>) Comparators.NaturalOrderComparator.INSTANCE;
+  }
+* public static <T> Comparator<T> nullsFirst(Comparator<? super T> comparator) {
+      return new Comparators.NullComparator<>(true, comparator);
+  }
+* public static <T> Comparator<T> nullsLast(Comparator<? super T> comparator) {
+      return new Comparators.NullComparator<>(false, comparator);
+  }
+  ...
+
+}
+```
+---
+name: 8refs
+# [Method References](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html)
 
 ---
 name: 8streams
