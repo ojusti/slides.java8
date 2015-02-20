@@ -42,6 +42,8 @@ a {
   }
 .remark-code, .remark-inline-code {
   font-family: 'Ubuntu Mono';
+}
+.remark-code {
   margin-left: 20%;
 }
 .remark-code-line-highlighted {

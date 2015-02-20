@@ -285,23 +285,86 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 - Method and constructor references refer to methods or constructors without invoking them.
 ---
 name: 8streams
-# [Streams](http://docs.oracle.com/javase/8/docs/technotes/guides/language/lambda_api_jdk8.html)
-
----
-name: 8date
-# [Date-Time Package](http://docs.oracle.com/javase/8/docs/technotes/guides/datetime/index.html)
-un text
-
----
-
-# Code
+# [Streams ...](http://docs.oracle.com/javase/8/docs/technotes/guides/language/lambda_api_jdk8.html)
 ```
-public static void main(String...args)
-{
-  int i;
-* i++;
+public void printAll_java7(Collection<Integer> collection) {
+  for(Integer elt : collection) {
+    System.out.println(elt);
+  }
 }
 ```
+### ... are sequences of elements on which you can apply computations ...
+```
+public void printAll_java8(Collection<Integer> collection) {
+  collection.stream().sorted().forEach(System.out::println);
+}
+```
+### ... defined as sequences of steps ([monads](http://en.wikipedia.org/wiki/Monad_%28functional_programming%29))
+```
+public void printAllLessThanTenOrdered(Collection<?> collection) {
+  collection.stream().filter(i -> i < 10).sorted().forEach(System.out::println);
+}
+```
+---
+# Streams are pipelines with ...
+### ... a **source**
+#### collection, array, generator function, I/O channel
+```
+public static IntStream range(int startInclusive, int endExclusive) {...}
+```
+### ... 0 or more **intermediate operations**
+#### **stateless**: peek, filter, map, flatMap, skip, limit
+#### **stateful**: sorted, distinct
+```
+public Stream<T> filter(Predicate<? super T> predicate);
+```
+### ... a **terminal operation** that triggers computation
+#### forEach, collect, reduce
+```
+public Optional<T> min(Comparator<? super T> comparator);
+```
+---
+# Mapping ...
+```
+static public IK[] getIKs(IIdentifiable[] identifiables) {
+  IK[] res = new IK[identifiables.length];
+  for (int i = 0; i < identifiables.length; i++) {
+    res[i] = identifiables[i].getIk();
+  }
+  return res;
+}
+```
+### ... with Streams
+```
+IK[] res = Arrays.stream(identifiables)
+                 .map(IIdentifiable::getIk)
+                 .toArray(n -> new IK[n]);
 
-???
-Ce naiba trebuie sa spun
+List<IK> res = Arrays.stream(identifiables)
+                     .map(IIdentifiable::getIk)
+                     .collect(Collectors.toList());
+
+Map<IK, IIdentifiable> res = Arrays.stream(identifiables)
+                                   .collect(Collectors.toMap(IIdentifiable::getIk,
+                                                             Function.identity()));
+```
+---
+# Parallel Streams ...
+```
+identifiables.parallelStream().map(IIdentifiable::getIk)
+                              .collect(toList());
+```
+### ... use the default JVM’s fork/join pool: `ForkJoinPool.common()` ...
+```
+identifiables.parallelStream().map(IIdentifiable::getIk)
+*                             .peek(ik -> Thread.sleep(999_999))
+                              .collect(toList());
+```
+### ... which doesn’t compensate blocked workers
+<br>
+# Do not use *parallel streams* on server side
+---
+layout: true
+---
+class: center, middle, title
+# Questions ?
