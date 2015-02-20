@@ -185,7 +185,7 @@ public void sortByLengthInJava7(String[] strings) {
 }
 ```
 ### λ are functional programming constructs
-#### - blocks of code with parameters
+#### - blocks of code with parameters, aka methods
 #### - that may be executed at a later point in time
 ```
 public void sortByLengthInJava8(String[] strings) {
@@ -201,7 +201,10 @@ public void sortByLengthInJava8(String[] strings) {
 }
 
 public class Arrays {
-  public static <T> void sort(T[] a, Comparator<? super T> c) { }
+  public static <T> void sort(T[] a, Comparator<? super T> c) {
+    ...
+  }
+  ...
 }
 ```
 ### λ can be converted to functional interfaces
@@ -216,13 +219,9 @@ public interface Comparator<T> {
 
 ???
 - λ expressions can access effectively final variables from the enclosing scope.
-- Method and constructor references refer to methods or constructors without invoking them.
-- You can now add default and static methods to interfaces that provide concrete implementations.
-- You must resolve any conflicts between default methods from multiple interfaces.
-
 ---
 name: 8default
-# [Default Methods in Interfaces](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
+# [Default Methods in Interfaces ...](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html)
 ```
 @FunctionalInterface
 public interface Comparator<T> {
@@ -246,20 +245,45 @@ public interface Comparator<T> {
 * public static <T extends Comparable<? super T>> Comparator<T> naturalOrder() {
       return (Comparator<T>) Comparators.NaturalOrderComparator.INSTANCE;
   }
-* public static <T> Comparator<T> nullsFirst(Comparator<? super T> comparator) {
-      return new Comparators.NullComparator<>(true, comparator);
-  }
-* public static <T> Comparator<T> nullsLast(Comparator<? super T> comparator) {
-      return new Comparators.NullComparator<>(false, comparator);
-  }
   ...
-
 }
 ```
+### ... enable you to add new functionality to the interfaces
+???
+- You can now add default and static methods to interfaces that provide concrete implementations.
+- You must resolve any conflicts between default methods from multiple interfaces (`_8_Default`)
 ---
 name: 8refs
-# [Method References](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html)
-
+# [Method References ...](http://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html)
+```
+public void sortByLengthInJava8(String[] strings) {
+* Arrays.sort(strings, (first, second) -> Integer.compare(first.length(), second.length()));
+}
+```
+### ... are compact, easy-to-read λ for methods that already have a name
+```
+public void sortByLengthInJava8(String[] strings) {
+* Arrays.sort(strings, this::compareByLength);
+}
+private int compareByLength(String first, String second) {
+  return Integer.compare(first.length(), second.length());
+}
+```
+### ... can operate on λ's formal parameters
+```
+public void sortIgnoringCaseInJava8(String[] strings) {
+* Arrays.sort(strings, String::compareToIgnoreCase);
+}
+public final class String implements java.io.Serializable, Comparable<String>, CharSequence {
+  ...
+* public int compareToIgnoreCase(String str) {
+    return CASE_INSENSITIVE_ORDER.compare(this, str);
+  }
+  ...
+}
+```
+???
+- Method and constructor references refer to methods or constructors without invoking them.
 ---
 name: 8streams
 # [Streams](http://docs.oracle.com/javase/8/docs/technotes/guides/language/lambda_api_jdk8.html)
